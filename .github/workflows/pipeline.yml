@@ -28,7 +28,7 @@ jobs:
       
     # 1. copy config.template to config.js
     - name: Prepare config file to detokenize
-      run: copy src/public/config.template src/public/config.js
+      run: cp src/public/config.template src/public/config.js
 
     - name: Debug 003
       run: cat src/public/config.template
