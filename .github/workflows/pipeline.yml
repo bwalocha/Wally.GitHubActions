@@ -45,10 +45,10 @@ jobs:
       uses: cschleiden/replace-tokens@v1.2
       with:
         files: '["src/public/config.js"]'
-      env:
-        AZURE_B2C_CLIENT_ID: ${{ vars.AZURE_B2C_CLIENT_ID }}
-        AZURE_B2C_AUTHORITY_URL: ${{ vars.AZURE_B2C_AUTHORITY_URL }}
-        AZURE_B2C_SCOPE: ${{ vars.AZURE_B2C_SCOPE }}
+#     env:
+#       AZURE_B2C_CLIENT_ID: ${{ vars.AZURE_B2C_CLIENT_ID }}
+#       AZURE_B2C_AUTHORITY_URL: ${{ vars.AZURE_B2C_AUTHORITY_URL }}
+#       AZURE_B2C_SCOPE: ${{ vars.AZURE_B2C_SCOPE }}
         
     - name: Debug 005
       run: cat src/public/config.template
