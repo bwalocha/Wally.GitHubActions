@@ -1,0 +1,52 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "src/**"
+  pull_request:
+    branches:
+      - "master"
+    paths:
+      - "src/**"
+      - ".github/workflows/*.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Debug 001
+        run: cat src/public/config.template
+      - name: Debug 002
+        run: cat src/public/config.js
+      
+      # 1. copy config.template to config.js
+      - name: Prepare config file to detokenize
+        run: copy src/public/config.template src/public/config.js
+
+      - name: Debug 003
+        run: cat src/public/config.template
+      - name: Debug 004
+        run: cat src/public/config.js
+
+      # 2. detokenize config.js
+      # https://github.com/marketplace/actions/replace-tokens
+      # https://github.com/cschleiden/replace-tokens
+      - name: Replace Tokens
+      - uses: cschleiden/replace-tokens@v1.2
+        with:
+          files: '["src/public/config.js"]'
+        env:
+          AZURE_B2C_CLIENT_ID: ${{ vars.AZURE_B2C_CLIENT_ID }}
+          AZURE_B2C_AUTHORITY_URL: ${{ vars.AZURE_B2C_AUTHORITY_URL }}
+          AZURE_B2C_SCOPE: ${{ vars.AZURE_B2C_SCOPE }}
+          
+      - name: Debug 005
+        run: cat src/public/config.template
+      - name: Debug 006
+        run: cat src/public/config.js
