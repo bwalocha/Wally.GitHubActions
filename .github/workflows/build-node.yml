@@ -1,4 +1,4 @@
-name: Build Node
+name: WebApp
 
 on:
   push:
@@ -16,6 +16,7 @@ on:
 
 jobs:
   build:
+    name: Build Node
     runs-on: ubuntu-latest
 
     steps:
@@ -60,6 +61,8 @@ jobs:
         path: .
 
   test:
+    name: Test Node
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -67,7 +70,10 @@ jobs:
       run: npm test
 
   deploy:
+    name: Deploy TST
+    needs: test
     runs-on: ubuntu-latest
+
     environment:
       name: 'tst'
       url: 'https://wally.best'
