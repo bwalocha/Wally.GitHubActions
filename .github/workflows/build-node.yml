@@ -36,11 +36,11 @@ jobs:
           ${{ runner.os }}-
 
     - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '18.x'
-          registry-url: https://registry.npmjs.org
-          cache: ~/.npm
+      uses: actions/setup-node@v1
+      with:
+        node-version: '18.x'
+        registry-url: https://registry.npmjs.org
+        cache: ~/.npm
 
     - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: List the state of node modules
@@ -54,10 +54,10 @@ jobs:
         run: npm run build --if-present
 
     - name: Upload NPM artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: node-app
-          path: .
+      uses: actions/upload-artifact@v2
+      with:
+        name: node-app
+        path: .
 
   test:
     runs-on: ubuntu-latest
