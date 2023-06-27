@@ -139,5 +139,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: my-vite4-react-ts-app-dist
-        path: ./my-vite4-react-ts-app/dist
+        name: my-vite4-react-ts-app-tst
+        path: |
+          ./my-vite4-react-ts-app/dist
+          !./my-vite4-react-ts-app/dist/**/*.template
