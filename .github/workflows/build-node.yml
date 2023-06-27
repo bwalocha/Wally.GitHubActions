@@ -69,7 +69,7 @@ jobs:
     - name: Build
       run: npm --prefix ./src/my-vite4-react-ts-app run build --production --if-present
 
-    - name: Upload NPM artifacts
+    - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
         name: my-vite4-react-ts-app
@@ -99,19 +99,25 @@ jobs:
       url: 'https://wally.best'
 
     steps:
-    - name: Debug 001
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: my-vite4-react-ts-app
+        path: ./my-vite4-react-ts-app/dist
+
+    - name: Debug
       run: |
-        cat src/public/config.template
-        cat src/public/config.js
+        cat ./my-vite4-react-ts-app/dist/config.template
+        cat ./my-vite4-react-ts-app/dist/config.js
 
     # 1. copy config.template to config.js
     - name: Prepare config file to detokenize
-      run: cp src/public/config.template src/public/config.js
+      run: cp ./my-vite4-react-ts-app/dist/config.template ./my-vite4-react-ts-app/dist/config.js
 
-    - name: Debug 002
+    - name: Debug
       run: |
-        cat src/public/config.template
-        cat src/public/config.js
+        cat ./my-vite4-react-ts-app/dist/config.template
+        cat ./my-vite4-react-ts-app/dist/config.js
 
     # 2. detokenize config.js
     # https://github.com/marketplace/actions/replace-tokens
@@ -119,13 +125,19 @@ jobs:
     - name: Replace Tokens
       uses: cschleiden/replace-tokens@v1.2
       with:
-        files: '["src/public/config.js"]'
+        files: '["./my-vite4-react-ts-app/dist/config.js"]'
       env:
         AZURE_B2C_CLIENT_ID: ${{ vars.AZURE_B2C_CLIENT_ID }}
         AZURE_B2C_AUTHORITY_URL: ${{ vars.AZURE_B2C_AUTHORITY_URL }}
         AZURE_B2C_SCOPE: ${{ vars.AZURE_B2C_SCOPE }}
 
-    - name: Debug 003
+    - name: Debug
       run: |
-        cat src/public/config.template
-        cat src/public/config.js
+        cat ./my-vite4-react-ts-app/dist/config.template
+        cat ./my-vite4-react-ts-app/dist/config.js
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-vite4-react-ts-app-dist
+        path: ./my-vite4-react-ts-app/dist
