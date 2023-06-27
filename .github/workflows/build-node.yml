@@ -22,15 +22,15 @@ jobs:
     steps:
     - name: Debug
       run: |
-        echo "The job was triggered by a ${{ github.event_name }} event"
-        echo "This job is now running on a ${{ runner.os }} server hoster by GitHub"
-        echo "The name of branch is ${{ github.ref }} and the repository is ${{ github.repository }}"
+        echo "The job was triggered by a '${{ github.event_name }}' event"
+        echo "This job is now running on a '${{ runner.os }}' server hoster by GitHub"
+        echo "The name of branch is '${{ github.ref }}' and the repository is '${{ github.repository }}'"
 
     - uses: actions/checkout@v2
 
     - name: Debug
       run: |
-        echo "The repository has been copied to the ${{ github.workspace }} path on the runner"
+        echo "The repository has been copied to the '${{ github.workspace }}' path on the runner"
         ls ${{ github.workspace }}
 
     - name: Cache node modules
@@ -55,9 +55,8 @@ jobs:
 
     - name: Debug
       run: |
-        echo "The preinstalled tools are located in ${{ runner.tool_cache }} path on the runner"
+        echo "The preinstalled tools are located in '${{ runner.tool_cache }}' path on the runner"
         ls ${{ runner.tool_cache }}
-        node --version
 
     - name: List the state of node modules
       if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
@@ -65,10 +64,10 @@ jobs:
       run: npm list
 
     - name: Install dependencies
-      run: npm --prefix ./src/my-vite4-react-ts-app ci
+      run: npm --prefix ./src/my-vite4-react-ts-app ci --cache ~/.npm --prefer-offline
 
     - name: Build
-      run: npm --prefix ./src/my-vite4-react-ts-app run build --if-present
+      run: npm --prefix ./src/my-vite4-react-ts-app run build --production --if-present
 
     - name: Upload NPM artifacts
       uses: actions/upload-artifact@v2
@@ -78,7 +77,7 @@ jobs:
 
     - name: Debug
       run: |
-        echo "The job's status is ${{ job.status }}"
+        echo "The job's status is '${{ job.status }}'"
 
   test:
     name: Test Node
