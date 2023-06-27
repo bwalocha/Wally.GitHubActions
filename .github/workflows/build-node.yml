@@ -28,7 +28,6 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    steps:
     - name: Debug
       run: |
         echo "The repository has been copied to the ${{ github.workspace }} path on the runner"
