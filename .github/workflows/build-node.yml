@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name Debug
+    - name: Debug
       run: |
         echo "The job was triggered by a ${{ github.event_name }} event"
         echo "This job is now running on a ${{ runner.os }} server hoster by GitHub"
