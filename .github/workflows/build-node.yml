@@ -49,10 +49,10 @@ jobs:
       run: npm list
 
     - name: Install dependencies
-      run: npm ci
+      run: npm --prefix ./src/my-vite4-react-ts-app ci
 
     - name: Build
-      run: npm run build --if-present
+      run: npm --prefix ./src/my-vite4-react-ts-app run build --if-present
 
     - name: Upload NPM artifacts
       uses: actions/upload-artifact@v2
@@ -67,7 +67,7 @@ jobs:
 
     steps:
     - name: Unit Tests
-      run: npm test
+      run: npm --prefix ./src/my-vite4-react-ts-app test
 
   deploy:
     name: Deploy TST
