@@ -14,11 +14,6 @@ on:
       - "src/**"
       - ".github/workflows/*.yml"
 
-env:
-  AZURE_B2C_CLIENT_ID: ${{ vars.AZURE_B2C_CLIENT_ID }}
-  AZURE_B2C_AUTHORITY_URL: ${{ vars.AZURE_B2C_AUTHORITY_URL }}
-  AZURE_B2C_SCOPE: ${{ vars.AZURE_B2C_SCOPE }}
-
 jobs:
   build:
     uses: ./.github/workflows/build-node.yml
