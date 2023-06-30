@@ -58,7 +58,7 @@ jobs:
         j = json.loads('''${{ toJson(vars) }}''')
         print(j)
         with open(env_file, "a") as file:
-            for key, value in y.items():
+            for key, value in j.items():
                 file.write(f"{key}={value}\n")
 
     # 2. detokenize config.js
