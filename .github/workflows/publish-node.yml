@@ -41,6 +41,7 @@ jobs:
 
     - name: Debug
       run: |
+        echo "${{ inputs.vars }}"
         cat ./${{ inputs.project }}/dist/config.template
         cat ./${{ inputs.project }}/dist/config.js
 

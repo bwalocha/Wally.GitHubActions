@@ -33,7 +33,7 @@ jobs:
     with:
       project: my-vite4-react-ts-app
       environment: tst
-      vars: "{ 'AZURE_B2C_CLIENT_ID': '${{ vars.AZURE_B2C_CLIENT_ID }}', 'AZURE_B2C_AUTHORITY_URL': '${{ vars.AZURE_B2C_AUTHORITY_URL }}', 'AZURE_B2C_SCOPE': '${{ vars.AZURE_B2C_SCOPE }}' }"
+      vars: '{ "AZURE_B2C_CLIENT_ID": "${{ vars.AZURE_B2C_CLIENT_ID }}", "AZURE_B2C_AUTHORITY_URL": "${{ vars.AZURE_B2C_AUTHORITY_URL }}", "AZURE_B2C_SCOPE": "${{ vars.AZURE_B2C_SCOPE }}" }'
 
   deploy:
     uses: ./.github/workflows/publish-node.yml
