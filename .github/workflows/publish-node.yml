@@ -9,10 +9,6 @@ on:
         description: 'Environment to run publish against'
         type: string
         required: true
-      vars:
-        description: 'Environment Variables'
-        type: string
-        required: false
 
 jobs:
   publish:
@@ -52,9 +48,6 @@ jobs:
         import os
 
         env_file = os.getenv('GITHUB_ENV')
-        v = '''${{ inputs.vars }}'''
-        print(v)
-        #j = json.loads(v)
         j = json.loads('''${{ toJson(vars) }}''')
         print(j)
         with open(env_file, "a") as file:
