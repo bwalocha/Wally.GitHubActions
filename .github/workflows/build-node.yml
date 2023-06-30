@@ -2,6 +2,7 @@ on:
   workflow_call:
     inputs:
       project:
+        description: 'Environment to run build against'
         required: true
         type: string
 

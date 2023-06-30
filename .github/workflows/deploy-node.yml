@@ -2,11 +2,13 @@ on:
   workflow_call:
     inputs:
       project:
+        description: 'Project to run deployment against'
         required: true
         type: string
       environment:
+        description: 'Environment to run deployment against'
+        type: environment
         required: true
-        type: string
 
 jobs:
   deploy:

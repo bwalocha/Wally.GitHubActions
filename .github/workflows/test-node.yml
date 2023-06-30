@@ -2,6 +2,7 @@ on:
   workflow_call:
     inputs:
       project:
+        description: 'Project to run test against'
         required: true
         type: string
 

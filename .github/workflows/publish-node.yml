@@ -2,16 +2,17 @@ on:
   workflow_call:
     inputs:
       project:
+        description: 'Project to run publish against'
         required: true
         type: string
       environment:
+        description: 'Environment to run publish against'
+        type: environment
         required: true
+      vars:
+        description: 'Environment Variables'
         type: string
-
-env:
-  AZURE_B2C_CLIENT_ID: ${{ vars.AZURE_B2C_CLIENT_ID }}
-  AZURE_B2C_AUTHORITY_URL: ${{ vars.AZURE_B2C_AUTHORITY_URL }}
-  AZURE_B2C_SCOPE: ${{ vars.AZURE_B2C_SCOPE }}
+        required: false
 
 jobs:
   publish:
@@ -42,6 +43,21 @@ jobs:
       run: |
         cat ./${{ inputs.project }}/dist/config.template
         cat ./${{ inputs.project }}/dist/config.js
+
+    - name: Prepare environment variables
+      shell: python
+      run: |
+        import json
+        import os
+
+        env_file = os.getenv('GITHUB_ENV')
+
+        y = json.loads('''${{ inputs.vars }}''')
+        # y = json.loads('''${{ toJson(vars) }}''')
+
+        with open(env_file, "a") as file:
+            for key, value in y.items():
+                file.write(f"{key}={value}\n")
 
     # 2. detokenize config.js
     # https://github.com/marketplace/actions/replace-tokens
