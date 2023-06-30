@@ -54,8 +54,8 @@ jobs:
         env_file = os.getenv('GITHUB_ENV')
         v = '''${{ inputs.vars }}'''
         print(v)
-        j = json.loads(v)
-        # j = json.loads('''${{ toJson(vars) }}''')
+        #j = json.loads(v)
+        j = json.loads('''${{ toJson(vars) }}''')
         print(j)
         with open(env_file, "a") as file:
             for key, value in y.items():
