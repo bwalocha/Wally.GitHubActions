@@ -1,0 +1,60 @@
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+
+jobs:
+  publish:
+    name: Publish ${{ inputs.project }} ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ inputs.environment }}
+      url: 'https://wally.best'
+
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ inputs.project }}
+        path: ./${{ inputs.project }}/dist
+
+    - name: Debug
+      run: |
+        cat ./${{ inputs.project }}/dist/config.template
+        cat ./${{ inputs.project }}/dist/config.js
+
+    # 1. copy config.template to config.js
+    - name: Prepare config file to detokenize
+      run: cp ./${{ inputs.project }}/dist/config.template ./${{ inputs.project }}/dist/config.js
+
+    - name: Debug
+      run: |
+        cat ./${{ inputs.project }}/dist/config.template
+        cat ./${{ inputs.project }}/dist/config.js
+
+    # 2. detokenize config.js
+    # https://github.com/marketplace/actions/replace-tokens
+    # https://github.com/cschleiden/replace-tokens
+    - name: Replace Tokens
+      uses: cschleiden/replace-tokens@v1.2
+      with:
+        files: '["./${{ inputs.project }}/dist/config.js"]'
+
+    - name: Debug
+      run: |
+        cat ./${{ inputs.project }}/dist/config.template
+        cat ./${{ inputs.project }}/dist/config.js
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.project }}-${{ inputs.environment }}
+        path: |
+          ./${{ inputs.project }}/dist
+          !./${{ inputs.project }}/dist/**/*.template

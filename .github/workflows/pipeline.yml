@@ -1,0 +1,43 @@
+name: WebApp
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "src/**"
+      - ".github/workflows/*.yml"
+  pull_request:
+    branches:
+      - "master"
+    paths:
+      - "src/**"
+      - ".github/workflows/*.yml"
+
+jobs:
+  build:
+    uses: ./.github/workflows/jobs/build-node.yml
+    with:
+      project: my-vite4-react-ts-app
+
+  test:
+    uses: ./.github/workflows/jobs/test-node.yml
+    needs: build
+    with:
+      project: my-vite4-react-ts-app
+
+  publish:
+    uses: ./.github/workflows/jobs/publish-node.yml
+    secrets: inherit
+    needs: test
+    with:
+      project: my-vite4-react-ts-app
+      environment: tst
+
+  deploy:
+    uses: ./.github/workflows/jobs/publish-node.yml
+    secrets: inherit
+    needs: publish
+    with:
+      project: my-vite4-react-ts-app
+      environment: tst

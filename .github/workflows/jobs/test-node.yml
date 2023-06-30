@@ -1,0 +1,16 @@
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+
+jobs:
+  test:
+    name: Test Node
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Unit Tests
+      continue-on-error: true
+      run: npm --prefix ./src/${{ inputs.project }} test

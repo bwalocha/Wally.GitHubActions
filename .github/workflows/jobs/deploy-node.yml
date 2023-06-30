@@ -1,0 +1,31 @@
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy ${{ inputs.project }} ${{ inputs.environment }}
+    needs: test
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ inputs.environment }}
+      url: 'https://wally.best'
+
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ inputs.project }}-${{ inputs.environment }}
+        path: ./${{ inputs.project }}/dist
+
+    - name: Debug
+      run: |
+        cat ./my-vite4-react-ts-app/dist/config.template
+        cat ./my-vite4-react-ts-app/dist/config.js
