@@ -52,10 +52,11 @@ jobs:
         import os
 
         env_file = os.getenv('GITHUB_ENV')
-
-        y = json.loads('''${{ inputs.vars }}''')
-        # y = json.loads('''${{ toJson(vars) }}''')
-
+        v = '''${{ inputs.vars }}'''
+        print(v)
+        j = json.loads(v)
+        # j = json.loads('''${{ toJson(vars) }}''')
+        print(j)
         with open(env_file, "a") as file:
             for key, value in y.items():
                 file.write(f"{key}={value}\n")
