@@ -61,7 +61,7 @@ jobs:
   deploy-tst:
     uses: ./.github/workflows/publish-node.yml
     secrets: inherit
-    needs: deploy-dev
+    needs: [deploy-dev, publish-tst]
     with:
       project: my-vite4-react-ts-app
       environment: tst
@@ -69,7 +69,7 @@ jobs:
   deploy-prd:
     uses: ./.github/workflows/publish-node.yml
     secrets: inherit
-    needs: deploy-tst
+    needs: [deploy-tst, publish-prd]
     with:
       project: my-vite4-react-ts-app
       environment: prd
