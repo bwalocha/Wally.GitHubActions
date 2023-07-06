@@ -12,7 +12,7 @@ on:
 
 jobs:
   publish:
-    name: Publish ${{ inputs.project }} ${{ inputs.environment }}
+    name: ${{ inputs.project }} ${{ inputs.environment }}
     runs-on: ubuntu-latest
 
     environment:
