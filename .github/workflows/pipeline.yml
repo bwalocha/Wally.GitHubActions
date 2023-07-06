@@ -26,7 +26,15 @@ jobs:
     with:
       project: my-vite4-react-ts-app
 
-  publish:
+  publish-dev:
+    uses: ./.github/workflows/publish-node.yml
+    secrets: inherit
+    needs: test
+    with:
+      project: my-vite4-react-ts-app
+      environment: dev
+
+  publish-tst:
     uses: ./.github/workflows/publish-node.yml
     secrets: inherit
     needs: test
@@ -34,10 +42,34 @@ jobs:
       project: my-vite4-react-ts-app
       environment: tst
 
-  deploy:
+  publish-prd:
     uses: ./.github/workflows/publish-node.yml
     secrets: inherit
-    needs: publish
+    needs: test
+    with:
+      project: my-vite4-react-ts-app
+      environment: prd
+
+  deploy-dev:
+    uses: ./.github/workflows/publish-node.yml
+    secrets: inherit
+    needs: publish-dev
+    with:
+      project: my-vite4-react-ts-app
+      environment: dev
+
+  deploy-tst:
+    uses: ./.github/workflows/publish-node.yml
+    secrets: inherit
+    needs: deploy-dev
     with:
       project: my-vite4-react-ts-app
       environment: tst
+
+  deploy-prd:
+    uses: ./.github/workflows/publish-node.yml
+    secrets: inherit
+    needs: deploy-tst
+    with:
+      project: my-vite4-react-ts-app
+      environment: prd
