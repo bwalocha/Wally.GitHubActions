@@ -29,5 +29,5 @@ jobs:
 
     - name: Debug
       run: |
-        cat ./my-vite4-react-ts-app/dist/config.template
-        cat ./my-vite4-react-ts-app/dist/config.js
+        cat ./${{ inputs.project }}/dist/config.template
+        cat ./${{ inputs.project }}/dist/config.js
